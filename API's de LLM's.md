@@ -277,5 +277,5 @@ curl -X POST http://localhost:5678/webhook/chat \
 4. O **Respond to Webhook** devolve o resultado para você!
 
 <div align="center">
-  <img src="assets/20.png" alt="imagem 20" />
+  <img src="assets/21.png" alt="imagem 20" />
 </div>
