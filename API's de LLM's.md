@@ -1,266 +1,281 @@
-
-
 # O que é uma chave de API de um LLM?
 
-Uma **chave de API (API Key)** é um **identificador usado para autenticar e autorizar o acesso a um serviço de inteligência artificial hospedado na nuvem**, como modelos da OpenAI, Google ou Anthropic.
+Uma **chave de API (API Key)** é um identificador exclusivo usado para **autenticar e autorizar** o acesso a um serviço de inteligência artificial hospedado na nuvem, como os modelos da OpenAI, Google ou Anthropic.
 
-Esses modelos são chamados de **LLMs (Large Language Models)** e rodam em servidores dessas empresas.
+> **Nota:** Esses modelos são chamados de **LLMs (Large Language Models)** e rodam em servidores de alta capacidade dessas empresas.
 
-Quando um programa quer utilizar um modelo como **Gemini ou Llama**, ele precisa **enviar uma requisição para a API do provedor**.
+Quando um programa quer utilizar um modelo como **Gemini** ou **Llama**, ele precisa enviar uma requisição para a API do provedor. A API Key funciona como uma credencial, semelhante a uma senha, que informa ao servidor:
 
-A **API Key funciona como uma credencial**, semelhante a uma senha, que informa ao servidor:
+- **Quem** está fazendo a requisição;
+- **Qual projeto** está usando o serviço;
+- **Quais limites e permissões** se aplicam;
+- **Como contabilizar** o uso (rate limit, billing, etc.).
 
-* quem está fazendo a requisição
-* qual projeto está usando o serviço
-* quais limites e permissões se aplicam
-* como contabilizar o uso (rate limit, billing etc.)
+> **Aviso:** Sem essa chave, o serviço simplesmente **não permite o acesso ao modelo**.
 
-Sem essa chave, o serviço **não permite o acesso ao modelo**.
+---
 
-
-# Como a chave de API funciona na prática
+## Como a chave de API funciona na prática?
 
 Quando um programa envia uma solicitação para um LLM, ele inclui a chave no **cabeçalho da requisição HTTP**.
 
-Exemplo simplificado:
-
+**Exemplo simplificado:**
 ```http
 POST /v1/chat/completions
 Authorization: Bearer SUA_API_KEY
 Content-Type: application/json
 ```
 
-O servidor então:
+O servidor então realiza os seguintes passos:
+1. Valida a chave.
+2. Identifica o usuário ou projeto.
+3. Verifica os limites de uso.
+4. Processa a solicitação no modelo.
+5. Retorna a resposta do LLM e a devolve.
 
-1. valida a chave
-2. identifica o usuário ou projeto
-3. verifica limites de uso
-4. processa a solicitação no modelo
-5. retorna a resposta do LLM
-
+---
 
 # Recomendações para o case: API do Gemini ou Groq
 
+## GEMINI
 
-# GEMINI
+### 1. Acessar o Google AI Studio
+Entre no portal [Google AI Studio](https://aistudio.google.com) e faça login com sua **conta Google**.
 
-## 1. Acessar o Google AI Studio
+### 2. Criar a chave
+Clique no botão **Create API key**.
 
-Entre em:
+<div align="center">
+  <img src="assets/1.png" alt="imagem 1" />
+</div>
 
-[https://aistudio.google.com](https://aistudio.google.com)
+Escolha a opção **Gemini Default Project**.
 
-Faça login com sua **conta Google**.
+<div align="center">
+  <img src="assets/2.png" alt="imagem 2" />
+</div>
 
+Após confirmar, sua **API Key será gerada**.
 
-## 2. Criar a chave
-
-Clique em **Create API key**.
-
-Escolha **Gemini Default Project**.
-
-Após confirmar, a **API Key será gerada**.
-
-
-## 3. Copiar e guardar a chave
-
-A chave terá formato parecido com:
-
-```
+### 3. Copiar e guardar a chave
+A chave terá um formato parecido com este:
+```text
 AIzaSy**************
 ```
 
-Guarde em um local seguro.
+> **Importante:** Guarde esta chave em um local seguro. Ela será usada para autenticar todas as suas requisições à API.
 
-Ela será usada para **autenticar suas requisições à API**.
+---
 
+## GROQ
 
-# GROQ
-
-## 1. Criar conta
-
-Acesse:
-
-[https://console.groq.com](https://console.groq.com)
+### 1. Criar conta
+Acesse o console do Groq: [https://console.groq.com](https://console.groq.com)
 
 Clique em **Sign Up** e crie sua conta usando:
+- Google
+- GitHub
+- Email
 
-* Google
-* GitHub
-* Email
+### 2. Criar API Key
+No menu lateral, clique em **API Keys**:
 
+<div align="center">
+  <img src="assets/3.png" alt="imagem 3" />
+</div>
 
-## 2. Criar API Key
+Depois, clique no botão **Create API Key**:
 
-No menu lateral clique em:
+<div align="center">
+  <img src="assets/4.png" alt="imagem 4" />
+</div>
 
-```
-API Keys
-```
+Defina o **nome da chave** e a **data de expiração**:
 
-Depois clique em:
+<div align="center">
+  <img src="assets/5.png" alt="imagem 5" />
+</div>
 
-```
-Create API Key
-```
-
-Defina:
-
-* nome da chave
-* data de expiração
-
-Clique em **Submit**.
-
-A chave terá formato parecido com:
-
-```
+Clique em **Submit**. A chave terá um formato parecido com:
+```text
 gsk_xxxxxxxxxxxxxxxxxxxxx
 ```
 
-Copie e guarde, pois **não poderá visualizá-la novamente**.
+> **Atenção:** Copie e guarde esta chave imediatamente, pois **você não poderá visualizá-la novamente**.
 
+---
 
-# Exemplo prático: fluxo n8n + Gemini
+# Exemplo prático: Fluxo n8n + Gemini
 
-Neste exemplo criaremos um fluxo onde:
+Neste exemplo, criaremos um fluxo de automação onde:
+1. Um **Webhook** recebe uma requisição HTTP.
+2. A mensagem é enviada para o **Gemini**.
+3. O modelo processa a pergunta.
+4. A resposta é devolvida ao usuário.
 
-1. um **Webhook** recebe uma requisição HTTP
-2. a mensagem é enviada para o **Gemini**
-3. o modelo processa a pergunta
-4. a resposta é devolvida ao usuário
+**Arquitetura do fluxo:**
+> `Usuário` ➔ `Webhook` ➔ `Gemini` ➔ `Resposta`
 
-Arquitetura do fluxo:
+---
 
-```
-Usuário → Webhook → Gemini → Resposta
-```
+## Passo 1 — Criar um workflow
+Abra o workspace do **n8n** e crie um **novo workflow**.
 
+<div align="center">
+  <img src="assets/6.png" alt="imagem 6" />
+</div>
 
-# Passo 1 — Criar um workflow
+---
 
-Abra o workspace do n8n e crie um **novo workflow**.
+## Passo 2 — Criar o Webhook
 
+### O que é um Webhook?
+Um **Webhook** é um endpoint HTTP que permite que sistemas externos enviem dados para um workflow. Neste caso, ele será responsável por **receber a pergunta enviada pelo usuário**.
 
-# Passo 2 — Criar o Webhook
+**Criando um webhook:**
+Clique no botão **`+`** no canto superior da tela:
 
-## O que é um Webhook?
+<div align="center">
+  <img src="assets/7.png" alt="imagem 7" />
+</div>
 
-Um **Webhook** é um endpoint HTTP que permite que sistemas externos enviem dados para um workflow.
+Na barra que aparecer, pesquise por `webhook` e clique nele:
 
-Neste caso ele será responsável por **receber uma pergunta enviada pelo usuário**.
+<div align="center">
+  <img src="assets/8.png" alt="imagem 8" />
+</div>
 
+Ao clicar, será aberta a tela de configuração do webhook.
 
-## Configuração
+### Configuração
+Adicione o node **Webhook** com os seguintes parâmetros:
+- **HTTP Method:** `POST`
+- **Path:** `chat`
+- **Respond:** `Using Respond to Webhook Node`
 
-Adicionar node **Webhook** com os parâmetros:
+> *Essa configuração fará com que o Webhook espere até o final do workflow para retornar a resposta ao usuário.*
 
-```
-HTTP Method: POST
-Path: chat
-Respond: Using Respond to Webhook Node
-```
+<div align="center">
+  <img src="assets/9.png" alt="imagem 9" />
+</div>
 
+---
 
-# Passo 3 — Adicionar node Gemini
+## Passo 3 — Adicionar node Gemini
+Após configurar o Webhook, saia da tela de configuração e clique novamente no botão **`+`**.
 
-Adicionar o node **Google Gemini → Message a model**.
+<div align="center">
+  <img src="assets/10.png" alt="imagem 10" />
+</div>
 
+Isso abrirá a barra lateral. Pesquise por `Gemini` e selecione **Google Gemini**.
 
-## Configurar credenciais
+<div align="center">
+  <img src="assets/11.png" alt="imagem 11" />
+</div>
 
-Clique em:
+Depois, selecione a opção **Message a model**. Isso abrirá a tela de configuração do node.
 
-```
-Credentials → Create new credential
-```
+<div align="center">
+  <img src="assets/12.png" alt="imagem 12" />
+</div>
 
-Insira sua **API Key do Gemini**.
+### Configurar credenciais
+Clique em: `Credentials ➔ Create new credential`
 
+<div align="center">
+  <img src="assets/13.png" alt="imagem 13" />
+</div>
 
-## Configuração do node
+Insira sua **API Key do Gemini** (aquela que geramos no início do tutorial).
 
-```
-Resource: Text
-Model: gemini-3-pro-preview
-```
+### Configuração do node
+- **Resource:** `Text`
+- **Model:** `gemini-3-pro-preview`
 
-No campo **Prompt** use a expressão:
-
+No campo **Prompt**, use a seguinte expressão:
 ```text
 Responda a seguinte pergunta do usuário de forma clara e objetiva:
 
 {{$json["body"]["message"]}}
 ```
 
+> *Essa expressão faz com que o node pegue a mensagem enviada no Webhook e a envie para o modelo de linguagem.*
 
-# Passo 4 — Node de resposta
+<div align="center">
+  <img src="assets/14.png" alt="imagem 14" />
+</div>
 
-Adicionar o node:
+---
 
-```
-Respond to Webhook
-```
+## Passo 4 — Node de resposta
+Depois de configurar o node do Gemini, volte à tela principal e clique novamente no botão **`+`**.
 
-Configuração:
+<div align="center">
+  <img src="assets/15.png" alt="imagem 15" />
+</div>
 
-```
-Respond With: JSON
-```
+Na barra de busca, procure por **Respond to Webhook** e selecione o node.
 
-Response Body:
+<div align="center">
+  <img src="assets/16.png" alt="imagem 16" />
+</div>
 
+### Configuração:
+- **Respond With:** `JSON`
+
+No **Response Body**, insira:
 ```json
 {
   "response": "{{$json.content.parts[0].text}}"
 }
 ```
 
+> *Essa expressão extrai apenas o texto da resposta gerada pelo modelo, deixando o retorno da API mais simples e direto.*
 
-# Passo 5 — Publicar workflow
+<div align="center">
+  <img src="assets/17.png" alt="imagem 17" />
+</div>
 
-Clique em:
+---
 
-```
-Publish
-```
+## Passo 5 — Publicar e executar o workflow
 
-Depois:
+Após finalizar a configuração de todos os nodes, clique em **Publish**.
 
-```
-Execute Workflow
-```
+<div align="center">
+  <img src="assets/18.png" alt="imagem 18" />
+</div>
 
+Em seguida, clique em **Execute Workflow** para deixá-lo aguardando o teste.
 
-# Passo 6 — Testar o fluxo
+<div align="center">
+  <img src="assets/19.png" alt="imagem 19" />
+</div>
 
-Endpoint gerado:
+---
 
-```
+## Passo 6 — Testar o fluxo
+
+O seu **Webhook** terá gerado um endpoint semelhante a este:
+```text
 http://localhost:5678/webhook/chat
 ```
 
-Exemplo de requisição:
-
+**Exemplo de requisição:**
+Abra seu terminal e execute o comando abaixo (ou utilize uma ferramenta como Postman/Insomnia):
 ```bash
 curl -X POST http://localhost:5678/webhook/chat \
  -H "Content-Type: application/json" \
  -d '{"message":"Explique o que é um LLM em uma frase."}'
 ```
 
+**Fluxo da requisição em ação:**
+1. O **Webhook** recebe a pergunta enviada.
+2. A mensagem é encaminhada para o **Gemini**.
+3. O modelo processa e gera uma resposta inteligente.
+4. O **Respond to Webhook** devolve o resultado para você!
 
-# Fluxo da requisição
-
-1. Webhook recebe a pergunta
-2. mensagem vai para o **Gemini**
-3. o modelo gera uma resposta
-4. o **Respond to Webhook** devolve o resultado
-
-
-Se quiser, também posso te entregar **uma versão muito mais profissional dessa documentação (estilo README de projeto open-source)** com:
-
-* **table of contents automático**
-* **diagramas de arquitetura**
-* **callouts (tips / warnings)**
-* **melhor didática para alunos**
-
-Ela fica **bem nível documentação oficial de projeto**.
+<div align="center">
+  <img src="assets/20.png" alt="imagem 20" />
+</div>

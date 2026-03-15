@@ -1,29 +1,27 @@
-
 # Instalação e Execução do n8n com Docker
 
 ## 1. Introdução
 
 Este documento apresenta um passo a passo detalhado para instalar e executar o **n8n** localmente utilizando **Docker**. O objetivo é permitir que qualquer pessoa configure rapidamente um ambiente de automação local para **desenvolvimento, testes e experimentação com workflows e integrações**.
 
-
+---
 
 # O que é o n8n?
 
 O **n8n** é uma plataforma de **automação de workflows** que permite integrar diferentes serviços, APIs e sistemas.
 
-
+---
 
 # O que é Docker?
 
 O **Docker** é uma plataforma que permite executar aplicações dentro de **containers isolados**.
 
 Um container contém tudo que a aplicação precisa para rodar:
+- Código
+- Dependências
+- Configurações
 
-* código
-* dependências
-* configurações
-
-
+---
 
 # Instalação do Docker
 
@@ -78,9 +76,8 @@ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin dock
 docker --version
 ```
 
-Exemplo de saída:
-
-```
+**Exemplo de saída:**
+```text
 Docker version 27.x.x
 ```
 
@@ -90,39 +87,33 @@ Docker version 27.x.x
 sudo docker run hello-world
 ```
 
-Se aparecer uma mensagem de sucesso, o Docker foi instalado corretamente.
+> **Nota:** Se aparecer uma mensagem de sucesso, o Docker foi instalado corretamente.
 
+---
 
-
-# Instalação no Windows ou macOS
+## Instalação no Windows ou macOS
 
 ### Passo 1
-
 Acesse o site oficial do Docker:
-
 [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
 
 ### Passo 2
-
 Baixe o **Docker Desktop**.
 
 ### Passo 3
-
 Execute o instalador.
 
 ### Passo 4
-
 Reinicie o computador se solicitado.
 
 ### Passo 5 — Verificar instalação
-
 Abra o terminal e execute:
 
 ```bash
 docker --version
 ```
 
-
+---
 
 # Inicializar o n8n
 
@@ -130,13 +121,11 @@ docker --version
 
 Esse comando cria o local onde serão armazenados os dados do n8n.
 
-Ele precisa ser executado **apenas uma vez**.
+> **Importante:** Ele precisa ser executado **apenas uma vez**.
 
 ```bash
 docker volume create n8n_data
 ```
-
-
 
 ## 2. Executar o n8n
 
@@ -154,63 +143,55 @@ docker run -it --rm \
  docker.n8n.io/n8nio/n8n
 ```
 
-
-
-## Verificar containers em execução
+## 3. Verificar containers em execução
 
 ```bash
 docker ps
 ```
 
-Saída esperada:
-
-```
+**Saída esperada:**
+```text
 CONTAINER ID   IMAGE       PORTS
 xxxxxxx        n8nio/n8n   0.0.0.0:5678->5678
 ```
 
-
+---
 
 # Acessar a interface do n8n
 
 Abra o navegador e acesse:
 
-```
+```text
 http://localhost:5678
 ```
 
 No primeiro acesso será necessário criar:
+- Usuário
+- Senha
+- Workspace inicial
 
-* usuário
-* senha
-* workspace inicial
+> **Dica:** Depois disso a interface de criação de **workflows** aparecerá.
 
-Depois disso a interface de criação de **workflows** aparecerá.
-
-
+---
 
 # Comandos úteis do Docker
 
 ### Ver containers ativos
-
 ```bash
 docker ps
 ```
 
-### Ver todos containers
-
+### Ver todos os containers
 ```bash
 docker ps -a
 ```
 
 ### Ver logs do n8n
-
 ```bash
 docker logs n8n
 ```
 
 ### Acompanhar logs em tempo real
-
 ```bash
 docker logs -f n8n
 ```
