@@ -129,29 +129,9 @@ docker volume create n8n_data
 Sempre que quiser iniciar o n8n novamente, execute:
 
 ```bash
-docker run -it --rm \
- --name n8n \
- -p 5678:5678 \
- -e GENERIC_TIMEZONE="America/Sao_Paulo" \
- -e TZ="America/Sao_Paulo" \
- -e N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true \
- -e N8N_RUNNERS_ENABLED=true \
- -v n8n_data:/home/node/.n8n \
- docker.n8n.io/n8nio/n8n
+docker run -it --rm --name n8n -p 5678:5678 -e GENERIC_TIMEZONE="America/Sao_Paulo" -e TZ="America/Sao_Paulo" -e N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true -e N8N_RUNNERS_ENABLED=true -v n8n_data:/home/node/.n8n docker.n8n.io/n8nio/n8n
 ```
 
-## 3. Verificar containers em execução
-
-```bash
-docker ps
-```
-
-**Saída esperada:**
-
-```text
-CONTAINER ID   IMAGE       PORTS
-xxxxxxx        n8nio/n8n   0.0.0.0:5678->5678
-```
 
 # Acessar a interface do n8n
 

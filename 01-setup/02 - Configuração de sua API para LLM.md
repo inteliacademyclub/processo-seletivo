@@ -110,7 +110,46 @@ gsk_xxxxxxxxxxxxxxxxxxxxx
 > **Atenção:** Copie e guarde esta chave imediatamente, pois **você não poderá visualizá-la novamente**.
 
 
---- 
 
+## Usando o Groq no n8n
+
+O n8n não possui um nó nativo dedicado ao Groq, mas isso não é um problema. A API do Groq foi projetada para ser **compatível com o formato da API da OpenAI**, ou seja, ela aceita as mesmas estruturas de requisição e resposta.
+
+Por isso, você pode usar o **nó da OpenAI** dentro do n8n para se comunicar com o Groq, basta fazer os seguintes ajustes:
+
+**1. Adicione o nó da OpenAI no seu fluxo:**
+
+<div align="center">
+  <img src="../assets/22.png" alt="Nó da OpenAI no canvas do n8n" />
+</div>
+
+<br/>
+
+**2. Nas credenciais do nó, preencha sua API Key do Groq e altere o campo "Base URL":**
+
+Você precisa alterar a URL base para o endpoint do Groq:
+   ```
+   https://api.groq.com/openai/v1
+   ```
+   > Essa troca é necessária porque, por padrão, o nó da OpenAI aponta para os servidores da própria OpenAI (`api.openai.com`). Ao mudar para a URL do Groq, você redireciona as requisições para a infraestrutura deles, mantendo o mesmo formato de comunicação.
+
+
+E utilizar sua API Key do Groq (gerada no passo anterior) no campo de credencial do nó. 
+
+<div align="center">
+  <img src="../assets/23.png" alt="Configuração da credencial OpenAI com Base URL do Groq" />
+</div>
+
+
+<br/>
+
+**3. No campo "Model", selecione o modelo `OPENAI/GPT-OSS-120B`:**
+
+<div align="center">
+  <img src="../assets/24.png" alt="Seleção do modelo GPT-OSS-120B no nó da OpenAI" />
+</div>
+
+
+--- 
 
 Caso queria avaliar outras opções, recomendamos esse material: https://github.com/cheahjs/free-llm-api-resources
