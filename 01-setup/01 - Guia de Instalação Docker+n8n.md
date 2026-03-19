@@ -169,28 +169,3 @@ No primeiro acesso será necessário criar:
 
 > **Dica:** Depois disso a interface de criação de **workflows** aparecerá.
 
-# Comandos úteis do Docker
-
-### Ver containers ativos
-
-```bash
-docker ps
-```
-
-### Ver todos os containers
-
-```bash
-docker ps -a
-```
-
-### Ver logs do n8n
-
-```bash
-docker logs n8n
-```
-
-### Acompanhar logs em tempo real
-
-```bash
-docker logs -f n8n
-```
