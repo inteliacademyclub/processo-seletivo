@@ -108,3 +108,9 @@ gsk_xxxxxxxxxxxxxxxxxxxxx
 ```
 
 > **Atenção:** Copie e guarde esta chave imediatamente, pois **você não poderá visualizá-la novamente**.
+
+
+--- 
+
+
+Caso queria avaliar outras opções, recomendamos esse material: https://github.com/cheahjs/free-llm-api-resources
